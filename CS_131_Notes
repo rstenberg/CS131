@@ -1,0 +1,85 @@
+The Art of Computer Programming (TAoCP) 
+Volume 1 -> Fundamental Algorithms
+
+TEX: Programming language written for equation formatting
+	- Most textbooks are written using TEX now
+	- TEX processor:
+		- Long Pascal program
+		- Wrote another book to document the textbook source code
+			- When editing the source code, the documentation was NOT updated
+			- Inspired "Literate Programming"
+				Addition of comments into source code (1 file for source code AND documentation)
+
+Hash Trie: new data structure
+	- Feed a word in 
+	- Immediately find out if it already exists
+	- If it does, update the counter
+
+UNIX: Developed to help with text editing
+	Mackleroy added the pipeline "|"
+	Ex: program that will return a list of words that occur in a txt file sorted by # of occurrences first and alphabetically to break ties
+		// replace every non-letter with a newline character and then squeeze away extra newlines
+		// pipeline above result into sort so that uniq can find duplicates
+		// pipeline into unique (-c Prefix lines with a number representing how many times they occurred)
+		// pipeline by sorting for numeric and reverse (highest count first)
+		tr -cs a-zA-Z \n | sort | uniq -c | sort -nr
+
+TIOBE Index (2017-18): Attempt to estimate the ranking and quanity of use of programming languages
+1. Java 		<-
+2. C
+3. C++
+4. C#
+5. Python		<-
+6. VB.Net
+7. Javascript
+8. Perl
+9. Assembly	
+10. PHP
+.
+.
+.
+30. Prolog 		<-
+37. Scheme		<-
+~~ 	OCaml		<-
+
+Core of Programming Languages Course
+	1) Principles and limitations of programming models
+	2) Notations for these models (design + use + support for)
+	3) Methods to evaluate strengths and weaknesses in various context
+
+****** Readings to do ******
+Textbook sections: 1-3, 5, 7, 9
+Modern Programming Lang - Webber
+
+Final Exam:
+Open book/notes
+Closed computer
+Print out solutions to homeworks, examples from in class, old exams, etc.
+
+Midterm Exam:
+20% on 2/9
+
+Homework:
+6 - each 5%
+1 - 10%
+
+Topics
+	1) Theory
+	2) Language design
+	3) Syntax
+	4) Semantics
+	5) Functions
+	6) Names
+	7) Types
+	8) Control
+	9) Objects
+	10) Concurrency
+	11) Scripting
+
+Questions from other faculty:
+	1) Why are there so many programming languages/notations?
+		- Why not just one broad-spectrum language?
+		Answer: once a language has become so broad, the complexity of the language will be too difficult to understand
+			- Imagine a swiss army knife with 1000 tools (none of them will be that useful)
+	2) My software is too slow (in LISP) ==> switched to C++ for memory management, but kept crashing ==> What should I use?
+		Potential answers: Use python to glue together C-code
