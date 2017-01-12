@@ -47,7 +47,10 @@ Core of Programming Languages Course
 	2) Notations for these models (design + use + support for)
 	3) Methods to evaluate strengths and weaknesses in various context
 
-****** Readings to do ******
+
+
+// ************ Class Administrative Information ************* //
+
 Textbook sections: 1-3, 5, 7, 9
 Modern Programming Lang - Webber
 
@@ -83,3 +86,154 @@ Questions from other faculty:
 			- Imagine a swiss army knife with 1000 tools (none of them will be that useful)
 	2) My software is too slow (in LISP) ==> switched to C++ for memory management, but kept crashing ==> What should I use?
 		Potential answers: Use python to glue together C-code
+
+
+
+// ******************** Factors in chosing a language *********************** //
+
+Reasons to prefer one language to another
+	1) Popularity
+	2) Support from compilers, debuggers, etc.
+	3) Similarity to existing language libraries
+	4) Simplicity
+	5) Versatility
+	6) Libraries
+	7) Performance
+		- CPU
+		- Memory
+		- I/O (Disk/flash)
+		- Network
+	8) Reliability
+		- When you run it you know what it will do
+	9) Scalability to lots of source code
+	10) Convenience
+		- ex: (i += 1)		 ==>		(i++)
+	11) Orthogonality
+		- When you have multiple features of a lanugage, people can choose to use or not use those without effecting other features
+		- Non-ex: In c you can write functions to return ints, char, structs, but not functions or arrays
+	12) Safety: code works when you need it too most
+		- ex: If you have software that is used to break the car when the driver hits the pedal, you don't want it to fail
+	13) Concurrency
+		- ex: If you are writing a multi-threaded program, don't use Python
+	14) Exception Handling
+	15) Mutability
+		- Successful languages evolve
+		- ex: C language (1975) - designed for PDP-11
+			- PDP-11:
+				- Took 4 micro seconds on addition
+				- 16 KiB RAM
+				- 1.2 micro second memory cycle time
+				- Memory access time was much faster than CPU
+				- *p dereferencing designed to encourage memory access
+			- Language has evolved to accomodate new computers where CPU is 100x faster than memory cycle
+
+
+// ************ Extending existing languages ************ //
+
+<<< Designing a lnaguage for passing multiple parameters into functions >>>
+Original c code to pass multiple arguments
+Messy because an array must be initialized, filled, and passed with it's size into a function
+
+EX:
+	Obj args[7];
+	args[0] = 0;
+	.
+	.
+	.
+	args[6] = 6;
+	Foo(7, args);
+
+Solutions:
+	1) Make a Macro
+		# define ELTS(a)			(sizeof(a) / sizeof(a))
+		# define CALLMANY(f, args)	(f)(ELTS(a), a)
+		# define CALLN(f, ...)		CALLMANY(f, (Obj[] {__VA_ARGS__}))
+
+		CALLN(FOO, x, y, z, w, v, q);
+
+<<< Borne extended c language to use if, then, else, fi rather than curly brackets >>>
+
+	# define IF if 	(
+	# define THEN 	) {
+	# define ELSE 	} else {
+	# define FI 	}
+
+	This c-extension to the syntax did not stick
+
+
+// ************ Syntax ************ //
+
+Syntax: form independent of meaning
+Purpose: Draw the line between the form and meaning of a language
+
+NON_EXS: Not a syntax issue!
+	int x = "abc";		// Won't compile
+	int main(void) {	
+		return ""[1];	// Causes crash
+	}
+
+English example:
+	"Colorless green ideas sleep furiously"		Good syntax, nonsense semantics
+	"Ireland has leprechauns galore"			Bad syntax, good semantics
+	"Time flies."								Good syntax, good semantics, ambiguity
+
+	None of these examples would work in programmning (no room for bad syntax, semantics, or ambiguity)
+
+Reasons to prefer one syntax to another
+	1) Inertia
+		- Pick a syntax that people are already familiar with
+		- ex:   a+b    intead of      a b +
+	2) Simple and regular
+		- PostScript vs Forth
+		- Ex: (a+b)*c 		a b + c *
+	3) It's unambiguous
+		a-----b
+		- if next character can be glued to previous token as a token then compiler will do so
+		- compiler grabs "a" "--" "-- "-" "b"
+		- cannot apply "--" to "--" so this produces a syntax error
+
+Syntax can be broken into large and small components
+	Large: C++ program is made up of files
+	Small: Tokens  "--" "-" "/" "*" "+", etc.
+	"//" <--- comments are not really syntax
+
+// ******** Tokenization Troubles ******** //
+	
+	1) Danish character standardization
+		a = b + c;
+		// What is the $@q??/
+		printf("%d\n", a);
+		q = r + s;
+		v = n + 3;
+
+		Before print statement was added, program would not run properly
+		After print statement, program ran properly, but print statement wouldn't be called
+		Standardization committee decided that ??/ represents "\" character due to Danish ommitance of "\" character on their keyboard.
+		In c, "\" at the end of a line ignores the "\" and the newline character
+		Print statement was ignored and q = r + s was allowed to execute
+
+
+	2) Represent non-ascii characters by leading bytes with a '1' bit
+		Problem:
+			- if [00001111] represents I
+			- then [10000000][10000000][00001111] also represents I
+			- difficult to determine what programmer wants because they are different notations
+	
+	3) Languages without reserved words (Easier to evolve a language that doesn't make use of keywords)
+		(a)	Language: PL/1
+			IF (IF=B); THEN
+				A=C;
+			ELSE
+				D=F;
+		(b) Language: CE (C-extended)
+			do {
+				x/=10;
+			} until(x<=10)
+ 
+ Clear syntax is one where visualization skills "work"
+ ex/tip: 	- never use greater than and/or equal to ">" or ">="
+ 			- "less than" will ready left to right visually
+
+
+
+
